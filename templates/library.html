@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}Video Library{% endblock %}
+
+{% block content %}
+    <h1>Video Library</h1>
+
+    <div class="filters-sort">
+        <form action="{{ url_for('library') }}" method="GET" class="filter-form">
+            <label for="category-filter">Category:</label>
+            <select name="category" id="category-filter" onchange="this.form.submit()">
+                <option value="all" {% if not current_category or current_category == 'all' %}selected{% endif %}>All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category }}" {% if current_category == category %}selected{% endif %}>{{ category }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="sort-by">Sort By:</label>
+            <select name="sort_by" id="sort-by" onchange="this.form.submit()">
+                <option value="recently_uploaded" {% if current_sort == 'recently_uploaded' %}selected{% endif %}>Recently Uploaded</option>
+                <option value="most_liked" {% if current_sort == 'most_liked' %}selected{% endif %}>Most Liked</option>
+                <option value="most_viewed" {% if current_sort == 'most_viewed' %}selected{% endif %}>Most Viewed</option>
+            </select>
+        </form>
+    </div>
+    
+    {% if ads %}
+        <div class="ads-container">
+            {% for ad in ads %}
+            <div class="ad-item" id="ad-{{ ad.id }}">
+                <h3>{{ ad.title }}</h3>
+                <p>{{ ad.content }}</p>
+                {% if ad.image_url %}<img src="{{ ad.image_url }}" alt="{{ ad.title }}" class="ad-image">{% endif %}
+                {% if ad.link_url %}<a href="{{ ad.link_url }}" target="_blank" class="ad-link">Learn More</a>{% endif %}
+                {% if session.get('user_id') %}
+                    <button class="dismiss-ad-btn" data-ad-id="{{ ad.id }}">x</button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <div class="video-grid">
+        {% if videos %}
+            {% for video in videos %}
+                <div class="video-card">
+                    <a href="{{ url_for('video_detail', video_id=video.id) }}">
+                        <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" class="video-thumbnail">
+                        <h3>{{ video.title }}</h3>
+                    </a>
+                    <p class="video-category">{{ video.category }}</p>
+                    <div class="video-meta">
+                        <span>Views: {{ video.views }}</span>
+                        <span>Likes: <span id="likes-count-{{ video.id }}">{{ video.likes_count }}</span></span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No videos available in this category or with these filters.</p>
+        {% endif %}
+    </div>
+{% endblock %}

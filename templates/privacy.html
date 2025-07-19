@@ -1,0 +1,39 @@
+<!-- templates/privacy.html -->
+{% extends 'base.html' %}
+{% block title %}Privacy Policy - GIS Content Platform{% endblock %}
+{% block content %}
+<div class="privacy-section">
+    <h1><i class="fas fa-lock"></i> Privacy Policy</h1>
+    <p>Last updated: {{ moment().format('MMMM D, YYYY') }}</p>
+    
+    <section class="privacy-content">
+        <h2><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+        <p>At GIS Content Platform ("GIS Hub"), we value your privacy. This Privacy Policy explains how we collect, use, and protect your information.</p>
+        
+        <h2><i class="fas fa-user"></i> 2. Information We Collect</h2>
+        <p>We collect personal information such as your name, email address, and payment details (for donations) when you provide it voluntarily. We also collect usage data, such as browsing activity and IP addresses.</p>
+        
+        <h2><i class="fas fa-cogs"></i> 3. How We Use Your Information</h2>
+        <p>Your information is used to provide and improve our services, process donations, and communicate with you. We may use analytics to understand user behavior.</p>
+        
+        <h2><i class="fas fa-shield-alt"></i> 4. Data Sharing</h2>
+        <p>We do not sell your personal information. We may share data with trusted service providers (e.g., payment processors) to facilitate our services, in compliance with applicable laws.</p>
+        
+        <h2><i class="fas fa-key"></i> 5. Data Security</h2>
+        <p>We implement reasonable security measures to protect your data, but no system is completely secure. You use our services at your own risk.</p>
+        
+        <h2><i class="fas fa-user-check"></i> 6. Your Rights</h2>
+        <p>You may request access, correction, or deletion of your personal data by contacting us at <a href="mailto:support@gishub.com">celestakim018@gmail.com</a>.</p>
+        
+        <h2><i class="fas fa-file-alt"></i> 7. Cookies</h2>
+        <p>We use cookies to enhance your experience. You can manage cookie preferences through your browser settings.</p>
+        
+        <h2><i class="fas fa-envelope"></i> 8. Contact Us</h2>
+        <p>For privacy-related inquiries, reach us at <a href="mailto:support@gishub.com">celestakim018@gmail.com</a>.</p>
+    </section>
+    
+    <div class="back-link">
+        <a href="{{ url_for('library') }}" class="btn"><i class="fas fa-arrow-left"></i> Back to Library</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}Manage Videos{% endblock %}
+
+{% block content %}
+    <h1>Manage Videos <a href="{{ url_for('admin_add_video') }}" class="add-btn">+ Add New Video</a></h1>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Views</th>
+                <th>Likes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for video in videos %}
+                <tr>
+                    <td>{{ video.title }}</td>
+                    <td>{{ video.category }}</td>
+                    <td>{{ video.views }}</td>
+                    <td>{{ video.likes_count }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_edit_video', video_id=video.id) }}" class="btn-small edit-btn">Edit</a>
+                        <form action="{{ url_for('admin_delete_video', video_id=video.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn-small delete-btn" onclick="return confirm('Are you sure you want to delete this video?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

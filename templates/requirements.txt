@@ -1,0 +1,2 @@
+flask==2.3.2
+flask-moment==1.0.5

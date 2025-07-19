@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Enrollment Report{% endblock %}
+
+{% block content %}
+    <h1>Enrollment Report</h1>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>User Email</th>
+                <th>Video Title</th>
+                <th>Enrollment Date</th>
+                <th>After Watch Suggestion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if report_data %}
+                {% for entry in report_data %}
+                    <tr>
+                        <td>{{ entry.user_email }}</td>
+                        <td>{{ entry.video_title }}</td>
+                        <td>{{ entry.enrollment_timestamp.split('T')[0] }}</td>
+                        <td>{{ entry.suggestion_text }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">No enrollment data available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

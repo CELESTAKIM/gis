@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Announcement/Ad{% endblock %}
+
+{% block content %}
+    <h1>Edit Announcement/Ad: {{ ad.title }}</h1>
+    <form method="POST" class="admin-form">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{ ad.title }}" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" rows="5" required>{{ ad.content }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="image_url">Image URL (optional):</label>
+            <input type="url" id="image_url" name="image_url" value="{{ ad.image_url }}">
+        </div>
+        <div class="form-group">
+            <label for="link_url">Link URL (optional):</label>
+            <input type="url" id="link_url" name="link_url" value="{{ ad.link_url }}">
+        </div>
+        <div class="form-group checkbox-group">
+            <input type="checkbox" id="is_active" name="is_active" {% if ad.is_active %}checked{% endif %}>
+            <label for="is_active">Active</label>
+        </div>
+        <button type="submit" class="btn">Update Announcement/Ad</button>
+        <a href="{{ url_for('admin_manage_ads') }}" class="btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

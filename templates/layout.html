@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GIS Content Platform{% endblock %}</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js for admin dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar for Admin -->
+    {% if session.get('is_admin') %}
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li><a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('admin_users') }}"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="{{ url_for('admin_videos') }}"><i class="fas fa-video"></i> Videos</a></li>
+                <li><a href="{{ url_for('admin_ads') }}"><i class="fas fa-ad"></i> Ads</a></li>
+                <li><a href="{{ url_for('admin_comments') }}"><i class="fas fa-comments"></i> Comments</a></li>
+            </ul>
+        </aside>
+        <button class="sidebar-toggle"><i class="fas fa-chevron-right"></i></button>
+    {% endif %}
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{{ url_for('library') }}">GIS Hub</a>
+            </div>
+            <button class="nav-toggle"><i class="fas fa-bars"></i></button>
+            <ul>
+                <li><a href="{{ url_for('library') }}"><i class="fas fa-book"></i> Library</a></li>
+                <li><a href="{{ url_for('donate') }}"><i class="fas fa-donate"></i> Donate</a></li>
+                {% if 'user_id' in session %}
+                    <li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a></li>
+                    {% if session.get('is_admin') %}
+                        <li><a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i> Admin</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="{{ url_for('signup') }}"><i class="fas fa-user-plus"></i> Signup</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <i class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'danger' %}fa-exclamation-triangle{% elif category == 'warning' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+  <!-- base.html (updated footer) -->
+<footer>
+    <p>© {{ moment().format('YYYY') }} GIS Content Platform. All rights reserved. | 
+       <a href="{{ url_for('terms') }}">Terms</a> | 
+       <a href="{{ url_for('privacy') }}">Privacy</a></p>
+</footer>
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% if session.get('is_admin') %}
+        <script src="{{ url_for('static', filename='js/admin_charts.js') }}"></script>
+    {% endif %}
+
+    
+</body>
+
+</html>

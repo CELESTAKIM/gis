@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Donate{% endblock %}
+
+{% block content %}
+    <div class="donate-section">
+        <h1>Support Our Platform</h1>
+        <p>Your generous donations help us to continue providing high-quality GIS content and improve our platform.</p>
+
+        <h2>Donation Methods</h2>
+        <div class="payment-methods">
+            <div class="payment-option placeholder">
+                <h3>M-Pesa STK Push</h3>
+                <p><em>(Currently a placeholder - API integration required)</em></p>
+                <button class="btn" disabled>Donate via STK Push</button>
+            </div>
+            <div class="payment-option placeholder">
+                <h3>PayPal</h3>
+                <p><em>(Currently a placeholder - API integration required)</em></p>
+                <button class="btn" disabled>Donate via PayPal</button>
+            </div>
+            <div class="payment-option active">
+                <h3>M-Pesa Direct</h3>
+                <p>Copy the number and send your donation directly via M-Pesa.</p>
+                <button class="btn copy-mpesa-btn" data-mpesa-number="0101370035">Copy M-Pesa Number</button>
+                <div id="mpesa-copy-message" class="copy-success-message" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="donation-comment-box">
+            <h2>Leave a Comment with Your Donation</h2>
+            <form action="{{ url_for('donate') }}" method="POST">
+                <textarea name="comment" placeholder="e.g., 'Donated 500 KES, thank you for the great tutorials!'" rows="4"></textarea>
+                <button type="submit" class="btn">Submit Comment (after donation)</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

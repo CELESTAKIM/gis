@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+    <h1>Welcome, {{ user.username }}!</h1>
+
+    {% if ads %}
+        <div class="ads-container">
+            {% for ad in ads %}
+            <div class="ad-item" id="ad-{{ ad.id }}">
+                <h3>{{ ad.title }}</h3>
+                <p>{{ ad.content }}</p>
+                {% if ad.image_url %}<img src="{{ ad.image_url }}" alt="{{ ad.title }}" class="ad-image">{% endif %}
+                {% if ad.link_url %}<a href="{{ ad.link_url }}" target="_blank" class="ad-link">Learn More</a>{% endif %}
+                <button class="dismiss-ad-btn" data-ad-id="{{ ad.id }}">x</button>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="profile-section">
+        <h2>Your Information</h2>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Account Created:</strong> {{ user.created_at.split('T')[0] }}</p>
+    </div>
+
+    <div class="profile-section">
+        <h2>Liked Videos</h2>
+        {% if liked_videos %}
+            <div class="video-grid">
+                {% for video in liked_videos %}
+                    <div class="video-card">
+                        <a href="{{ url_for('video_detail', video_id=video.id) }}">
+                            <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" class="video-thumbnail">
+                            <h3>{{ video.title }}</h3>
+                        </a>
+                        <p class="video-category">{{ video.category }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You haven't liked any videos yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="profile-section">
+        <h2>Enrolled Videos</h2>
+        {% if enrolled_videos %}
+            <div class="video-grid">
+                {% for video in enrolled_videos %}
+                    <div class="video-card">
+                        <a href="{{ url_for('video_detail', video_id=video.id) }}">
+                            <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" class="video-thumbnail">
+                            <h3>{{ video.title }}</h3>
+                        </a>
+                        <p class="video-category">{{ video.category }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You haven't enrolled in any videos yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}

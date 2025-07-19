@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}Manage Announcements/Ads{% endblock %}
+
+{% block content %}
+    <h1>Manage Announcements/Ads <a href="{{ url_for('admin_add_ad') }}" class="add-btn">+ Add New Ad</a></h1>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ad in ads %}
+                <tr>
+                    <td>{{ ad.title }}</td>
+                    <td>{{ ad.content[:50] }}...</td>
+                    <td>{{ 'Yes' if ad.is_active else 'No' }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_edit_ad', ad_id=ad.id) }}" class="btn-small edit-btn">Edit</a>
+                        <form action="{{ url_for('admin_delete_ad', ad_id=ad.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn-small delete-btn" onclick="return confirm('Are you sure you want to delete this ad?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

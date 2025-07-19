@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ video.title }}{% endblock %}
+
+{% block content %}
+    <div class="video-detail">
+        <h1>{{ video.title }}</h1>
+        <p class="video-category">{{ video.category }}</p>
+        <div class="video-player">
+            <iframe src="{{ video.video_url }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <p class="video-description">{{ video.description }}</p>
+
+        <div class="video-actions">
+            <button class="btn like-btn {% if is_liked %}liked{% endif %}" data-video-id="{{ video.id }}">
+                <span class="likes-text">{% if is_liked %}Unlike{% else %}Like{% endif %}</span> (<span id="current-likes-count">{{ video.likes_count }}</span>)
+            </button>
+            
+            {% if not is_enrolled %}
+                <button class="btn enroll-btn" data-video-id="{{ video.id }}">Enroll</button>
+            {% else %}
+                <button class="btn enrolled-btn" disabled>Enrolled</button>
+            {% endif %}
+        </div>
+
+        {% if is_enrolled %}
+            <div class="after-watch-suggestion">
+                <h3>After Watch Suggestion</h3>
+                <form action="{{ url_for('submit_suggestion', video_id=video.id) }}" method="POST">
+                    <textarea name="suggestion" placeholder="Share your feedback or suggestions..." rows="5">{{ user_suggestion if user_suggestion else '' }}</textarea>
+                    <button type="submit" class="btn">Submit Suggestion</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!-- templates/terms.html -->
+{% extends 'base.html' %}
+{% block title %}Terms of Service - GIS Content Platform{% endblock %}
+{% block content %}
+<div class="terms-section">
+    <h1><i class="fas fa-gavel"></i> Terms of Service</h1>
+    <p>Last updated: {{ moment().format('MMMM D, YYYY') }}</p>
+    
+    <section class="terms-content">
+        <h2><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+        <p>Welcome to GIS Content Platform ("GIS Hub"). By accessing or using our website, you agree to be bound by these Terms of Service ("Terms"). If you do not agree, please do not use our services.</p>
+        
+        <h2><i class="fas fa-user"></i> 2. User Accounts</h2>
+        <p>You must create an account to access certain features. You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account.</p>
+        
+        <h2><i class="fas fa-video"></i> 3. Content Usage</h2>
+        <p>All videos and materials on GIS Hub are for personal, non-commercial use only. You may not reproduce, distribute, or modify content without permission.</p>
+        
+        <h2><i class="fas fa-donate"></i> 4. Donations</h2>
+        <p>Donations made through the platform are voluntary and non-refundable. By donating, you agree to the terms outlined in our <a href="{{ url_for('donate') }}">Donation Page</a>.</p>
+        
+        <h2><i class="fas fa-shield-alt"></i> 5. User Conduct</h2>
+        <p>You agree not to use GIS Hub for any unlawful or prohibited activities, including but not limited to uploading harmful content or violating intellectual property rights.</p>
+        
+        <h2><i class="fas fa-ban"></i> 6. Termination</h2>
+        <p>We reserve the right to suspend or terminate your account for violations of these Terms, at our sole discretion.</p>
+        
+        <h2><i class="fas fa-envelope"></i> 7. Contact Us</h2>
+        <p>If you have questions about these Terms, contact us at <a href="mailto:support@gishub.com">celestakim018@gmail.com</a>.</p>
+    </section>
+    
+    <div class="back-link">
+        <a href="{{ url_for('library') }}" class="btn"><i class="fas fa-arrow-left"></i> Back to Library</a>
+    </div>
+</div>
+{% endblock %}

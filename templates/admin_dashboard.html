@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+
+    <div class="admin-stats-grid">
+        <div class="stat-card">
+            <h3>Total Users</h3>
+            <p>{{ total_users }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Videos</h3>
+            <p>{{ total_videos }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Enrollments</h3>
+            <p>{{ total_enrollments }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Unique Enrolled Users</h3>
+            <p>{{ unique_enrollments_users }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Likes</h3>
+            <p>{{ total_likes }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>New Users (Last 7 Days)</h3>
+            <p>{{ new_users_7days_count }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>New Videos (Last 7 Days)</h3>
+            <p>{{ new_videos_7days_count }}</p>
+        </div>
+    </div>
+
+    <div class="admin-charts">
+        <div class="chart-container">
+            <h3>Video Views by Category</h3>
+            <canvas id="videoViewsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Enrollment Trends</h3>
+            <canvas id="enrollmentTrendsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Likes Distribution (Top 5 Videos)</h3>
+            <canvas id="likesDistributionChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>User Registrations</h3>
+            <canvas id="userActivityChart"></canvas>
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <h2>Donation Comments</h2>
+        {% if donation_comments %}
+            <ul class="donation-comments-list">
+                {% for comment in donation_comments | reverse %} {# Display most recent first #}
+                    <li>
+                        <strong>From:</strong> {{ comment.user_email }} <br>
+                        <strong>Comment:</strong> "{{ comment.comment }}" <br>
+                        <small>({{ comment.timestamp.split('T')[0] }})</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No donation comments yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="admin-navigation">
+        <h2>Admin Tools</h2>
+        <ul>
+            <li><a href="{{ url_for('admin_manage_users') }}">Manage Users</a></li>
+            <li><a href="{{ url_for('admin_manage_videos') }}">Manage Videos</a></li>
+            <li><a href="{{ url_for('admin_manage_ads') }}">Manage Announcements/Ads</a></li>
+            <li><a href="{{ url_for('admin_enrollment_report') }}">Enrollment Report</a></li>
+        </ul>
+    </div>
+    <script src="{{ url_for('static', filename='js/admin_charts.js') }}"></script>
+{% endblock %}
